@@ -7,7 +7,7 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL: "http://localhost:5000/odinbook/facebook/callback",
+      callbackURL: "http://localhost:5000/odinbook/facebook/redirect",
       profileFields: ["id", "displayName", "photos", "email"],
     },
     function (accessToken, refreshToken, profile, cb) {
@@ -43,9 +43,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((userId, done) => {
-  User.findById(userId)
-    .then((user) => {
-      done(null, user);
-    })
-    .catch((err) => done(err));
+  User.findById(userId, (err, user) => {
+    done(err, user);
+  });
 });
