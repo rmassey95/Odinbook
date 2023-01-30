@@ -19,6 +19,7 @@
   "homepage": "https://github.com/rmassey95/Odinbook#readme",
   "dependencies": {
     "async": "^3.2.4",
+    "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
@@ -26,12 +27,12 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "express-validator": "^6.14.3",
+    "helmet": "^6.0.1",
     "mongoose": "^6.8.4",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^2.0.20",
     "passport": "^0.5.3",
-    "passport-facebook": "^3.0.0",
-    "uuid": "^9.0.0"
+    "passport-facebook": "^3.0.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0"

@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const path = require("path");
 const express = require("express");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
@@ -9,6 +10,8 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const compression = require("compression");
+const helmet = require("helmet");
 
 const app = express();
 
@@ -31,6 +34,7 @@ app.use(cookieParser());
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(helmet());
 
 app.use(
   cors({
@@ -40,29 +44,8 @@ app.use(
   })
 );
 
-// app.use(
-//   session({
-//     secret: "secret",
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: { secure: false, maxAge: 3600000 },
-//   })
-// );
-
-// app.use(
-//   session({
-//     secret: "secret",
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//       secure: true,
-//       sameSite: "none",
-//       domain: "http://localhost:3000/",
-//     },
-//   })
-// );
-
-app.use(express.static("public"));
+app.use(compression()); // Compress all routes
+app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(express.json());
 
