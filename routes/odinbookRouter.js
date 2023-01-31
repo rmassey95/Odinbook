@@ -137,9 +137,11 @@ router.get("/facebook", passport.authenticate("facebook"));
 router.get(
   "/facebook/redirect",
   passport.authenticate("facebook", {
-    successRedirect: CLIENT_HOMEPAGE_URL,
     failureRedirect: "/odinbook/login/failed",
-  })
+  }),
+  (req, res, next) => {
+    res.redirect(CLIENT_HOMEPAGE_URL);
+  }
 );
 
 // when login failed, send failed msg

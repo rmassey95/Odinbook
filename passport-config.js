@@ -7,8 +7,7 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL:
-        "https://odinbook-backend-c33h.onrender.com/odinbook/facebook/redirect",
+      callbackURL: "http://localhost:5000/odinbook/facebook/redirect",
       profileFields: ["id", "displayName", "photos", "email"],
     },
     function (accessToken, refreshToken, profile, cb) {
