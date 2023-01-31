@@ -12,6 +12,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const compression = require("compression");
 const helmet = require("helmet");
+const port = process.env.PORT || 3001;
 
 const app = express();
 
@@ -55,6 +56,6 @@ app.get("/", (req, res) => {
   res.send("HOMEPAGE");
 });
 
-app.listen(5000, () => {
-  console.log("Listening on port 5000");
+app.listen(port, () => {
+  console.log("Listening on port " + port);
 });
