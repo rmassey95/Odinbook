@@ -122,6 +122,7 @@ router.get(
 
 // FB login
 router.get("/login/success", (req, res) => {
+  console.log(req);
   if (req.user) {
     return res
       .status(200)
