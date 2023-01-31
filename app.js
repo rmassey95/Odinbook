@@ -23,15 +23,23 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
+// app.use(
+//   cookieSession({
+//     name: "session",
+//     keys: ["thisappisawesome"],
+//     maxAge: 24 * 60 * 60 * 100,
+//   })
+// );
+
 app.use(
-  cookieSession({
-    name: "session",
-    keys: ["thisappisawesome"],
-    maxAge: 24 * 60 * 60 * 100,
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
   })
 );
 
-app.use(cookieParser());
+// app.use(cookieParser());
 
 app.use(passport.initialize());
 app.use(passport.session());

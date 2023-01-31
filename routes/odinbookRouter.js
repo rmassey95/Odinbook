@@ -11,7 +11,6 @@ const path = require("path");
 const upload = multer({ dest: `${path.resolve("public/")}/images` });
 
 const isAuthorized = (req, res, next) => {
-  console.log(req.body);
   if (req.isAuthenticated()) {
     return next();
   } else {

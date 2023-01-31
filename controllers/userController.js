@@ -1,10 +1,6 @@
 const User = require("../models/user");
 const async = require("async");
 
-exports.facebookCallback = (req, res, next) => {
-  res.redirect("http://localhost:5000/odinbook/test");
-};
-
 exports.getAllUsers = (req, res, next) => {
   User.find().exec((err, allUsers) => {
     if (err) {
