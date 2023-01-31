@@ -2,17 +2,16 @@ require("dotenv").config();
 
 const path = require("path");
 const express = require("express");
-const cookieSession = require("cookie-session");
 const passport = require("passport");
 const passportSetup = require("./passport-config");
 const odinbookRouter = require("./routes/odinbookRouter");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const compression = require("compression");
 const helmet = require("helmet");
 const port = process.env.PORT || 3001;
+const MongoStore = require("connect-mongo");
 
 const app = express();
 
@@ -23,23 +22,17 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-// app.use(
-//   cookieSession({
-//     name: "session",
-//     keys: ["thisappisawesome"],
-//     maxAge: 24 * 60 * 60 * 100,
-//   })
-// );
-
 app.use(
   session({
     secret: "secret",
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      ttl: 24 * 60 * 60,
+    }),
   })
 );
-
-// app.use(cookieParser());
 
 app.use(passport.initialize());
 app.use(passport.session());
