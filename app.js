@@ -23,13 +23,11 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-app.set("trust proxy", 1);
 app.use(
   session({
     secret: "secret",
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true },
   })
 );
 
@@ -37,13 +35,23 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(helmet());
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    methods: "GET,PUT,POST,DELETE",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//     methods: "GET,PUT,POST,DELETE",
+//     credentials: true,
+//   })
+// );
+
+app.use((req, res, next) => {
+  // allow CORS for React App
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  // allow crendentials to be sent
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  // allow header to be set in React App
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  next();
+});
 
 app.use(compression()); // Compress all routes
 app.use(express.static(path.join(__dirname, "public")));
