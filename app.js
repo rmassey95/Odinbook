@@ -1,16 +1,17 @@
 require("dotenv").config();
+require("./passport-config");
 
 const path = require("path");
 const express = require("express");
 const passport = require("passport");
-const passportSetup = require("./passport-config");
-const odinbookRouter = require("./routes/odinbookRouter");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const compression = require("compression");
+// const compression = require("compression");
 const helmet = require("helmet");
 const port = process.env.PORT || 3001;
 const MongoStore = require("connect-mongo");
+
+const odinbookRouter = require("./routes/odinbookRouter");
 
 const app = express();
 app.set("trust proxy", 1);
@@ -54,7 +55,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(compression()); // Compress all routes
+// app.use(compression()); // Compress all routes
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(express.json());
