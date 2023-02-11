@@ -10,18 +10,17 @@ const session = require("express-session");
 const helmet = require("helmet");
 const port = process.env.PORT || 3001;
 const MongoStore = require("connect-mongo");
+const mongoose = require("mongoose");
 
 const odinbookRouter = require("./routes/odinbookRouter");
-
-const app = express();
-app.set("trust proxy", 1);
-
-const mongoose = require("mongoose");
 
 const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
+const app = express();
+app.set("trust proxy", 1);
 
 app.use(helmet());
 
@@ -43,6 +42,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// app.use(compression()); // Compress all routes
+app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.json());
+app.use(express.json());
+
 app.use((req, res, next) => {
   // allow CORS for React App
   res.setHeader("Access-Control-Allow-Origin", process.env.DOMAIN_URL);
@@ -54,11 +58,6 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
   next();
 });
-
-// app.use(compression()); // Compress all routes
-app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.json());
-app.use(express.json());
 
 app.use("/odinbook", odinbookRouter);
 
