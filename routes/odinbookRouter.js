@@ -28,7 +28,7 @@ router.get(
   postController.getTimelinePosts
 );
 
-router.get("/profile/all-posts", postController.get);
+router.get("/profile/all-posts", postController.getAllPosts);
 
 router.get("/profile/:userId", isAuthorized, postController.getProfileInfo);
 
