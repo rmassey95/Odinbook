@@ -43,11 +43,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(compression()); // Compress all routes
-app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.json());
-app.use(express.json());
-
 app.use(
   cors({
     origin: "https://earnest-monstera-6c3cb0.netlify.app",
@@ -56,6 +51,11 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(compression()); // Compress all routes
+app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.json());
+app.use(express.json());
 
 // app.use((req, res, next) => {
 //   // allow CORS for React App
