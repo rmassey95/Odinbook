@@ -22,6 +22,8 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
+app.use(helmet());
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -39,7 +41,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(helmet());
 
 app.use((req, res, next) => {
   // allow CORS for React App

@@ -4,7 +4,8 @@ const passport = require("passport");
 const userController = require("../controllers/userController");
 const postController = require("../controllers/postController");
 const commentController = require("../controllers/commentController");
-const CLIENT_HOMEPAGE_URL = "http://localhost:3000/odinbook";
+const CLIENT_HOMEPAGE_URL =
+  "https://earnest-monstera-6c3cb0.netlify.app/odinbook";
 const multer = require("multer");
 const path = require("path");
 
@@ -27,7 +28,7 @@ router.get(
   postController.getTimelinePosts
 );
 
-router.get("/profile/all-posts", postController.getAllPosts);
+router.get("/profile/all-posts", postController.get);
 
 router.get("/profile/:userId", isAuthorized, postController.getProfileInfo);
 
